@@ -25,6 +25,7 @@ data class Duration(
         return Duration(d, h, m)
     }
 
+
     override fun toString(): String =
         "${days}d ${hours}h ${minutes}m"
 }
