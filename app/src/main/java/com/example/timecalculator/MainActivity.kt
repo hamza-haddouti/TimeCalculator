@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.timecalculator.model.Duration
 import com.example.timecalculator.model.Timed
-import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -168,20 +167,6 @@ fun ActionButton(label: String, onClick: () -> Unit) {
     }
 }
 
-fun formatDuration(ms: Long): String {
-    val totalSeconds = ms / 1000
-    val days = totalSeconds / (24 * 3600)
-    val hours = (totalSeconds % (24 * 3600)) / 3600
-    val minutes = (totalSeconds % 3600) / 60
-    val seconds = totalSeconds % 60
-    return buildString {
-        if (days > 0) append("${days}d ")
-        if (hours > 0) append("${hours}h ")
-        if (minutes > 0) append("${minutes}m ")
-        append("${seconds}s")
-    }
-}
-
 @Composable
 fun TodoScreen() {
     var todos by remember { mutableStateOf(listOf<Timed<String>>()) }
@@ -216,7 +201,6 @@ fun TodoScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Texte rayé si terminé, sinon normal
                 Text(
                     text = if (finished) {
                         val duration = todo.duration
@@ -230,7 +214,6 @@ fun TodoScreen() {
                 )
 
                 Row {
-                    // Bouton Finish uniquement si pas encore terminé
                     if (!finished) {
                         Button(onClick = {
                             val endDuration = Duration(
